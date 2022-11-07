@@ -1,0 +1,131 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 74px;
+}
+@media screen and (max-width: 450px) {
+  .header {
+    padding: 0 4px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .header__movies {
+    padding: 0 4px;
+  }
+}
+.header_profile {
+  background: #f3c1f8;
+}
+.header-nav {
+  font-family: "Inter", "Arial", sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 74px;
+  width: 100%;
+}
+.header-nav__container {
+  display: flex;
+  align-items: center;
+}
+@media screen and (max-width: 950px) {
+  .header-nav__container {
+    display: none;
+  }
+}
+
+.header-nav__links {
+  width: 231px;
+  margin-right: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+.header-nav__link {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  text-decoration: none;
+  margin: 0;
+  color: black;
+}
+.header-nav__link:active {
+  text-decoration: underline;
+  font-weight: 500;
+}
+.header-nav__link:hover {
+  opacity: 0.7;
+}
+@media screen and (max-width: 450px) {
+  .header-nav__link-entrance {
+    font-size: 10px;
+    line-height: 16px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .header-nav__link-registration {
+    font-size: 10px;
+    line-height: 16px;
+  }
+}
+
+.header-nav__profile {
+  color: black;
+  font-weight: 500;
+  width: 100px;
+  height: 32px;
+  font-size: 13px;
+  line-height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+}
+.header-nav__link-entrance {
+  background: #000000;
+  border-radius: 3px;
+  color: white;
+  padding: 8px 20px;
+}
+.header-nav__link-entrance:hover {
+  opacity: 0.8;
+}
+@media screen and (max-width: 450px) {
+  .header-nav__link-entrance {
+    padding: 5px 12px;
+  }
+}
+
+.header-nav__link-registration {
+  padding-right: 30px;
+}
+@media screen and (max-width: 450px) {
+  .header-nav__link-registration {
+    padding-right: 14px;
+  }
+}
+
+.header-nav__menu {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  display: none;
+}
+
+.header-nav__menu-img {
+  width: 44px;
+}
+.header-nav__menu:hover {
+  opacity: 0.8;
+}
+@media screen and (max-width: 950px) {
+  .header-nav__menu {
+    display: block;
+  }
+}
+.header-nav__menu_hidden {
+  display: none;
+}

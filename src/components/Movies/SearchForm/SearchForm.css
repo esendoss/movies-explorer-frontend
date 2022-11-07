@@ -1,0 +1,137 @@
+.researcher {
+  margin: 70px 0 80px;
+}
+@media screen and (max-width: 807px) {
+  .researcher {
+    margin: 80px 0 45px;
+  }
+}
+
+.researcher__box {
+  box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
+  border-radius: 9px;
+  display: flex;
+  justify-content: space-between;
+  height: 72px;
+}
+@media screen and (max-width: 402px) {
+  .researcher__box {
+    max-width: 300px;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0 19px;
+  }
+}
+.researcher__search-icon {
+  width: 34px;
+  height: 34px;
+  padding-left: 19px;
+}
+@media screen and (max-width: 402px) {
+  .researcher__search-icon {
+    display: none;
+  }
+}
+.researcher__field {
+  border: none;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  padding: 0;
+  width: 100%;
+}
+@media screen and (max-width: 402px) {
+  .researcher__field {
+    font-size: 14px;
+  }
+}
+.researcher__shortfilms-container {
+  display: flex;
+  align-items: center;
+  border-left: 1px solid #cbcbcb;
+  height: 40px;
+}
+@media screen and (max-width: 807px) {
+  .researcher__shortfilms-container {
+    border-left: none;
+  }
+}
+.researcher__button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  padding-right: 19px;
+}
+@media screen and (max-width: 402px) {
+  .researcher__button {
+    padding-right: 0;
+  }
+}
+.researcher__button-img {
+  cursor: pointer;
+}
+.researcher__shortfilms {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+  padding-right: 29px;
+}
+.researcher__shortfilms-switch {
+  cursor: pointer;
+  width: 36px;
+  height: 20px;
+  background: #ffffff;
+  display: block;
+  border-radius: 16px;
+  box-shadow: 0px 4px 4px rgba(50, 50, 71, 0.08),
+    0px 4px 8px rgba(50, 50, 71, 0.06);
+  position: relative;
+  margin-right: 14px;
+  margin-left: 29px;
+  z-index: -1;
+}
+.researcher__shortfilms-switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #f5f5f5;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+.researcher__shortfilms:checked + .researcher__shortfilms-switch::after {
+  background: #2be080;
+  left: 18px;
+}
+.researcher__caption {
+  margin-right: 30px;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+}
+.researcher__container {
+  display: flex;
+  align-items: center;
+}
+@media screen and (max-width: 402px) {
+  .researcher__container {
+    display: block;
+  }
+}
+.researcher__shortfilms-container_mobile {
+  display: none;
+}
+@media screen and (max-width: 807px) {
+  .researcher__shortfilms-container_mobile {
+    display: flex;
+    justify-content: center;
+    padding-top: 45px;
+  }
+}
+@media screen and (max-width: 807px) {
+  .researcher__shortfilms-container_desktop {
+    display: none;
+  }
+}
