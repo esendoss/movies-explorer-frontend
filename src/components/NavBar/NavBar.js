@@ -20,11 +20,11 @@ function NavBar(props) {
               Сохранённые фильмы
             </Link>
           </div>
-          <Link to="/profile" className="nav-bar__link header-nav__profile">
+          <Link to="/profile" className="header-nav__profile">
             Аккаунт
             <img className="navigation__profile-img" src={icon} alt="Профиль" />
           </Link>
-          <button className="nav-bar__exit">
+          <button className="nav-bar__exit" type="button">
             <img className="nav-bar__exit-img" src={exit} alt="Выход" />
           </button>
         </div>

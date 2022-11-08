@@ -85,7 +85,12 @@ function Header(props) {
             </Link>
           </div>
           <button className="header-nav__menu">
-            <img className="header-nav__menu-img" src={menu} alt="Меню" />
+            <img
+              className="header-nav__menu-img"
+              src={menu}
+              alt="Меню"
+              type="button"
+            />
           </button>
           <NavBar />
         </div>

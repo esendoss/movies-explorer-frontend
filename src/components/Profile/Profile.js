@@ -19,7 +19,7 @@ function Profile(props) {
         <button className="profile__button-edit" type="submit">
           Редактировать
         </button>
-        <button className="profile__button-exit" type="submit">
+        <button className="profile__button-exit" type="button">
           Выйти из аккаунта
         </button>
       </div>

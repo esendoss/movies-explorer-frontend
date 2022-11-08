@@ -10,7 +10,9 @@ function Movies(props) {
       <SearchForm />
       <MoviesCardList />
       <section className="more">
-        <button className="more__button">Еще</button>
+        <button className="more__button" type="submit">
+          Еще
+        </button>
       </section>
     </section>
   );

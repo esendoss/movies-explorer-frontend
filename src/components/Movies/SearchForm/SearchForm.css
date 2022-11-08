@@ -67,6 +67,10 @@
     padding-right: 0;
   }
 }
+.researcher__button:hover {
+  opacity: 0.8;
+}
+
 .researcher__button-img {
   cursor: pointer;
 }
@@ -88,9 +92,8 @@
   position: relative;
   margin-right: 14px;
   margin-left: 29px;
-  z-index: -1;
 }
-.researcher__shortfilms-switch::after {
+.researcher__shortfilms-switch:after {
   content: "";
   position: absolute;
   top: 2px;
@@ -101,9 +104,10 @@
   border-radius: 50%;
   transition: 0.3s;
 }
-.researcher__shortfilms:checked + .researcher__shortfilms-switch::after {
+.researcher__shortfilms:checked + .researcher__shortfilms-switch:after {
   background: #2be080;
-  left: 18px;
+  left: calc(100% - 2px);
+  transform: translateX(-100%);
 }
 .researcher__caption {
   margin-right: 30px;

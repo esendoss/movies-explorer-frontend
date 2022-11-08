@@ -18,7 +18,12 @@ function Student(props) {
             Контур». После того, как прошёл курс по веб-разработке, начал
             заниматься фриланс-заказами и ушёл с постоянной работы.
           </p>
-          <a className="student__github" href="https://github.com/esendoss">
+          <a
+            className="student__github"
+            href="https://github.com/esendoss"
+            target="_blank"
+            rel="noreferrer"
+          >
             Github
           </a>
         </div>
@@ -29,6 +34,8 @@ function Student(props) {
         <a
           className="student__link"
           href="https://github.com/esendoss/how-to-learn"
+          target="_blank"
+          rel="noreferrer"
         >
           Статичный сайт
           <img className="student__arrow" src={arrow} alt="Стрелка" />
@@ -36,6 +43,8 @@ function Student(props) {
         <a
           className="student__link"
           href="https://github.com/esendoss/russian-travel"
+          target="_blank"
+          rel="noreferrer"
         >
           Адаптивный сайт
           <img className="student__arrow" src={arrow} alt="Стрелка" />
@@ -43,6 +52,8 @@ function Student(props) {
         <a
           className="student__link"
           href="https://github.com/esendoss/react-mesto-auth"
+          target="_blank"
+          rel="noreferrer"
         >
           Одностраничное приложение
           <img className="student__arrow" src={arrow} alt="Стрелка" />
