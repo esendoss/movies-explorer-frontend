@@ -34,6 +34,10 @@
   font-size: 15px;
   line-height: 18px;
   margin: 0 0 9px;
+  max-width: 280px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .movies-card__duration {
   font-weight: 400;
@@ -48,9 +52,34 @@
   width: 30px;
   height: 30px;
   background: none;
+  background-image: url(../../../images/save.svg);
 }
 
 .movies-card__save-button_active {
   background-image: url(../../../images/save-active.svg);
   padding: 0;
+  border: 0;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+}
+
+.movies-card__img {
+  width: 364px;
+  height: 203px;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 787px) {
+  .movies-card__img {
+    max-width: 339px;
+  }
+}
+@media screen and (max-width: 358px) {
+  .movies-card__img {
+    max-width: 300px;
+  }
+}
+.movies-card__img-link {
+  text-decoration: none;
 }

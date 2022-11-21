@@ -13,6 +13,7 @@
   display: flex;
   justify-content: space-between;
   height: 72px;
+  position: relative;
 }
 @media screen and (max-width: 402px) {
   .researcher__box {
@@ -138,4 +139,10 @@
   .researcher__shortfilms-container_desktop {
     display: none;
   }
+}
+.researcher__error {
+  color: red;
+  position: absolute;
+  left: 53px;
+  top: 47px;
 }

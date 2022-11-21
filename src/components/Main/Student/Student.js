@@ -1,6 +1,6 @@
 import React from "react";
 import "./Student.css";
-import photo from "../../../images/photo.png";
+import photo from "../../../images/portfolio.jpg";
 import arrow from "../../../images/arrow.svg";
 
 function Student(props) {
@@ -10,13 +10,13 @@ function Student(props) {
       <div className="student__container">
         <div className="student__description">
           <h3 className="student__title">Есения</h3>
-          <p className="student__caption">Фронтенд-разработчик, 23 года</p>
+          <p className="student__caption">Фронтенд-разработчица, 23 года</p>
           <p className="student__about">
-            Я родился и живу в Саратове, закончил факультет экономики СГУ. У
-            меня есть жена и дочь. Я люблю слушать музыку, а ещё увлекаюсь
-            бегом. Недавно начал кодить. С 2015 года работал в компании «СКБ
-            Контур». После того, как прошёл курс по веб-разработке, начал
-            заниматься фриланс-заказами и ушёл с постоянной работы.
+            Я родилась в Магнитогорске, закончив факультет биологии КФУ,
+            вернулась в родной город. Я люблю искусство и изучать что-то новое,
+            а недавно начала кодить. Во время прохождения курса по
+            веб-разработке начала работать в it-компании, разрабатываюшей
+            програмное обеспечение для банков.
           </p>
           <a
             className="student__github"
