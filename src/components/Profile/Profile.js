@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./Profile.css";
-import { CurrentUserContext } from "../CurrentUserContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 function Profile(props) {
   const currentUser = React.useContext(CurrentUserContext);
-
   const [name, setName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [readOnly, setReadOnly] = useState(true);
-
+  
+  useEffect(() => {
+    setName(currentUser.name);
+    setUserEmail(currentUser.email);
+  }, [currentUser]);
   function handleNameChange(e) {
     setName(e.target.value);
   }
@@ -39,15 +42,11 @@ function Profile(props) {
     setReadOnly(true);
   }, []);
 
-  useEffect(() => {
-    setName(currentUser.name);
-    setUserEmail(currentUser.email);
-  }, [currentUser]);
-
   function handleClickEdit(e) {
     e.preventDefault();
     setReadOnly(false);
   }
+  console.log(currentUser);
 
   return (
     <div className="profile">

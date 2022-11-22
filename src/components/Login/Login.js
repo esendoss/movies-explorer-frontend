@@ -1,72 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import "./Login.css";
 import logo from "../../images/logo.svg";
+import useValidateForm from "../../hooks/useValidateForm";
 
 function Login(props) {
-  const [userEmail, setUserEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { values, errors, isValid, resetForm, handleSubmit, handleChange } =
+    useValidateForm(props.onAuthorize);
 
-  function handleEmailChange(e) {
-    setUserEmail(e.target.value);
-  }
-  function handlePasswordChange(e) {
-    setPassword(e.target.value);
-  }
-
-  const {
-    register,
-    formState: { errors, isValid },
-    reset,
-  } = useForm({
-    mode: "onBlur",
-  });
-  function onSubmit(e) {
-    e.preventDefault();
-    props.onAuthorize(userEmail, password);
-    console.log(e);
-    reset();
-  }
+  useEffect(() => {
+    resetForm();
+  }, [resetForm]);
 
   return (
     <div className="login">
-      <img className="login__img" src={logo} alt="Лого"></img>
+      <Link to="/">
+        <img className="login__img" src={logo} alt="Логотип" />
+      </Link>
       <h2 className="login__header">Рады видеть!</h2>
-      <form className="login__form" onSubmit={onSubmit} noValidate>
+      <form className="login__form" onSubmit={handleSubmit} noValidate>
         <label className="login__label">E-mail</label>
         <input
           className="login__input"
           name="email"
           type="email"
-          {...register("email", {
-            required: "Введите email.",
-            pattern: {
-              value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
-              message: "Введите неверный формат email",
-            },
-          })}
-          autoComplete="on"
-          onChange={handleEmailChange}
+          autoComplete="off"
+          minLength="2"
+          maxLength="30"
+          onChange={handleChange}
+          value={values.email || ""}
+          required
         />
-        {errors.email && (
-          <p className="login__error-message">{errors.email.message}</p>
-        )}
+        {errors.email && <p className="login__error-message">{errors.email}</p>}
         <label className="login__label">Пароль</label>
         <input
           className="login__input"
           name="password"
           type="password"
-          {...register("password", {
-            required: true,
-          })}
-          autoComplete="on"
-          onChange={handlePasswordChange}
+          autoComplete="off"
+          minLength="8"
+          onChange={handleChange}
+          value={values.password || ""}
+          required
         />
-        {errors.password?.type === "required" && (
-          <p className="login__error-message">Введите пароль.</p>
+        {errors.password && (
+          <p className="login__error-message">{errors.password}</p>
         )}
-        <button className="login__button" type="submit" disabled={!isValid}>
+        <button
+          className={isValid ? "login__button" : "login__button login__button_disabled"} 
+          type="submit"
+          onClick={handleSubmit}
+          disabled={!isValid}
+        >
           Войти
         </button>
       </form>

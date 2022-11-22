@@ -3,20 +3,14 @@ import SearchForm from "../Movies/SearchForm/SearchForm";
 import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
 
-import { CurrentUserContext } from "../CurrentUserContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "../Movies/Movies.css";
 import "../../index.css";
 
-function SavedMovies({
-  preloader,
-  saveMovies,
-  handleInfoTooltip,
-  onDeleteClick,
-  filterFilms,
-}) {
+function SavedMovies(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
-  const [appearedMovies, setAppearedMovies] = useState(saveMovies); // показываемые фильмы
+  const [appearedMovies, setAppearedMovies] = useState(props.saveMovies); // показываемые фильмы
   const [filteredMovies, setFilteredMovies] = useState(appearedMovies); // отфильтрованные
   const [shortMovies, setShortMovies] = useState(false); // короткометражки
 
@@ -25,9 +19,9 @@ function SavedMovies({
   }
   // поиск по запросу
   function handleSearchMovie(value) {
-    const searchedFilms = filterFilms(saveMovies, value, shortMovies);
+    const searchedFilms = props.filterFilms(props.saveMovies, value, shortMovies);
     if (searchedFilms.length === 0) {
-      handleInfoTooltip({
+      props.handleInfoTooltip({
         isOpen: true,
         tooltipMessage: "Ничего не найдено",
       });
@@ -54,16 +48,16 @@ function SavedMovies({
       localStorage.getItem(`${currentUser.email} - shortSavedMovies`) === "true"
     ) {
       setShortMovies(true);
-      setAppearedMovies(handleDurationCheck(saveMovies));
+      setAppearedMovies(handleDurationCheck(props.saveMovies));
     } else {
       setShortMovies(false);
-      setAppearedMovies(saveMovies);
+      setAppearedMovies(props.saveMovies);
     }
-  }, [saveMovies, currentUser]);
+  }, [props.saveMovies, currentUser]);
 
   useEffect(() => {
-    setFilteredMovies(saveMovies);
-  }, [saveMovies]);
+    setFilteredMovies(props.saveMovies);
+  }, [props.saveMovies]);
 
   return (
     <section className="movies page__borders">
@@ -72,14 +66,14 @@ function SavedMovies({
         handleCheckboxState={handleCheckboxState}
         shortMovies={shortMovies}
       />
-      {preloader ? (
+      {props.preloader ? (
         <Preloader />
       ) : (
         <MoviesCardList
           allMovies={filteredMovies}
           searchedFilms={appearedMovies}
-          saveMovies={saveMovies}
-          onDeleteClick={onDeleteClick}
+          saveMovies={props.saveMovies}
+          onDeleteClick={props.onDeleteClick}
         />
       )}
     </section>

@@ -70,7 +70,7 @@
   }
 }
 
-.register__button:disabled {
+.register__button_disabled {
   background-color: #f8f8f8;
   color: #c2c2c2;
 }
@@ -116,4 +116,10 @@
   font-size: 10px;
   line-height: 12px;
   color: #ff4062;
+  width: 396px;
+}
+@media screen and (max-width: 620px) {
+  .register__error-message  {
+    width: 260px;
+  }
 }

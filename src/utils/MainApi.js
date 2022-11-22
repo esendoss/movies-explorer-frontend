@@ -14,18 +14,18 @@ class MainApi {
     if (!this._headers["Authorization"])
       this._headers["Authorization"] = "Bearer " + token;
   }
-  //
+  
   getSavedMovies() {
     return fetch(this._link + "/movies", {
       method: "GET",
       headers: this._headers,
-    });
+    }).then(this._checkError);
   }
   getUserInfo() {
     return fetch(this._link + "/users/me", {
       method: "GET",
       headers: this._headers,
-    });
+    }).then(this._checkError);
   }
   // редактирование профиля
   editUserInfo(name, email) {
@@ -36,7 +36,7 @@ class MainApi {
         name: name,
         email: email,
       }),
-    });
+    }).then(this._checkError);
   }
   // сохранение фильма
   saveMovieCard(movie) {
@@ -82,4 +82,4 @@ const mainApi = new MainApi({
   },
 });
 
-export default mainApi;
+export {mainApi};

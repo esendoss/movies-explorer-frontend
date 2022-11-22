@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import "./MoviesCard.css";
 
-function MoviesCard({ film, savedFilms, onSaveClick, onDeleteClick }) {
+function MoviesCard(props) {
   const location = useLocation();
   // функция преобразования продолжительности фильма
   function duration(time) {
@@ -16,26 +16,26 @@ function MoviesCard({ film, savedFilms, onSaveClick, onDeleteClick }) {
   }
   // сохранение фильма
   function handleSaveClick() {
-    onSaveClick(film);
+    props.onSaveClick(props.film);
   }
 
   // удаление фильма
   function handleDeleteClick() {
-    onDeleteClick(film);
+    props.onDeleteClick(props.film);
   }
 
   return (
     <li className="movies-card">
       <div className="movies-card__container">
         <div className="movies-card__about">
-          <h3 className="movies-card__title">{film.nameRU}</h3>
-          <p className="movies-card__duration">{duration(film.duration)}</p>
+          <h3 className="movies-card__title">{props.film.nameRU}</h3>
+          <p className="movies-card__duration">{duration(props.film.duration)}</p>
         </div>
         {location.pathname === "/movies" && (
           <button
-            className={`movies-card__save-button${savedFilms ? "_active" : ""}`}
+            className={`movies-card__save-button${props.savedFilms ? "_active" : ""}`}
             type="button"
-            onClick={savedFilms ? handleDeleteClick : handleSaveClick}
+            onClick={props.savedFilms ? handleDeleteClick : handleSaveClick}
           ></button>
         )}
         {location.pathname === "/saved-movies" && (
@@ -48,11 +48,11 @@ function MoviesCard({ film, savedFilms, onSaveClick, onDeleteClick }) {
       </div>
       <a
         className="movies-card__img-link"
-        href={film.trailerLink}
+        href={props.film.trailerLink}
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img className="movies-card__img" src={film.image} alt={film.nameRU} />
+        <img className="movies-card__img" src={props.film.image} alt={props.film.nameRU} />
       </a>
     </li>
   );

@@ -1,12 +1,28 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "./SearchForm.css";
 import searchicon from "../../../images/search.svg";
 import find from "../../../images/find.svg";
+import { CurrentUserContext } from "../../../contexts/CurrentUserContext";
 
-function SearchForm({ handleSearchMovies, handleCheckboxState, shortMovies }) {
+function SearchForm(props) {
+  const currentUser = React.useContext(CurrentUserContext);
+  const location = useLocation();
+
   const [searchValue, setSearchFilmValue] = useState("");
   const [searchError, setSearchError] = useState("");
   const [isValid, setIsValid] = useState(false);
+
+  // установка значения в поисковике
+  useEffect(() => {
+    if (location.pathname === "/movies") {
+      setSearchFilmValue(
+        localStorage.getItem(`${currentUser.email} - movieSearch`) || null
+      );
+    } else {
+      setSearchFilmValue(null);
+    }
+  }, [location.pathname]);
 
   function handleSearchChange(e) {
     const input = e.target;
@@ -17,8 +33,11 @@ function SearchForm({ handleSearchMovies, handleCheckboxState, shortMovies }) {
   function handleSubmit(evt) {
     evt.preventDefault();
     isValid
-      ? handleSearchMovies(searchValue)
+      ? props.handleSearchMovies(searchValue)
       : setSearchError("Нужно ввести ключевое слово.");
+    if (location.pathname === "/movies") {
+      localStorage.setItem(`${currentUser.email} - movieSearch`, searchValue);
+    }
   }
   useEffect(() => {
     setSearchError("");
@@ -60,8 +79,8 @@ function SearchForm({ handleSearchMovies, handleCheckboxState, shortMovies }) {
               className="researcher__shortfilms"
               type="checkbox"
               id="switch"
-              onChange={handleCheckboxState}
-              checked={shortMovies ? true : false}
+              onChange={props.handleCheckboxState}
+              checked={props.shortMovies ? true : false}
             />
             <label
               className="researcher__shortfilms-switch"
@@ -76,8 +95,8 @@ function SearchForm({ handleSearchMovies, handleCheckboxState, shortMovies }) {
           className="researcher__shortfilms"
           type="checkbox"
           id="switch2"
-          onChange={handleCheckboxState}
-          checked={shortMovies ? true : false}
+          onChange={props.handleCheckboxState}
+          checked={props.shortMovies ? true : false}
         />
         <label
           className="researcher__shortfilms-switch"

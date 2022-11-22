@@ -23,11 +23,12 @@ import * as Auth from "../utils/auth";
 
 import InfoTooltip from "./InfoTooltip/InfoTooltip";
 import ProtectedRoute from "./ProtectedRoute";
-import mainApi from "../utils/MainApi";
-import { CurrentUserContext } from "./CurrentUserContext";
+import { mainApi } from "../utils/MainApi";
+
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({}); //текущий пользователь
+  const [currentUser, setCurrentUser] = useState({ name: "", email: "" }); //текущий пользователь
 
   const [userEmail, setUserEmail] = useState("");
 
@@ -39,7 +40,7 @@ function App() {
   const [saveMovies, setSaveMovies] = useState([]); //сохраненные фильмы
 
   const [isInfoTooltip, setIsInfoTooltip] = useState(false);
-  const [isData, setData] = useState({});
+  const [tooltipMessage, setTooltipMessage] = useState("");
 
   const pathToHeaderArray = ["/", "/movies", "/saved-movies", "/profile"];
   const pathToFooterArray = ["/", "/movies", "/saved-movies"];
@@ -51,28 +52,25 @@ function App() {
   }, []);
 
   /* получение данных пользователя и сохраненных фильмов */
+  //console.log(currentUser);
 
-  // пользователь
   useEffect(() => {
     if (userEmail) {
-      setPreloader(true);
       mainApi.updateEmail();
-      mainApi
-        .getUserInfo()
-        .then((res) => setCurrentUser(res))
+      Promise.all([mainApi.getUserInfo()])
+        .then(([profile]) => {
+          setCurrentUser(profile);
+        })
         .catch((err) => {
           console.log(err);
-          handleInfoTooltip({
-            tooltipMessage: err,
-          });
-        })
-        .finally(() => setPreloader(false));
+        });
     }
   }, [userEmail]);
 
   // массив сохраненных фильмов
   useEffect(() => {
     if (userEmail && currentUser) {
+      mainApi.updateEmail();
       mainApi
         .getSavedMovies()
         .then((films) => {
@@ -81,12 +79,7 @@ function App() {
           );
           setSaveMovies(userSavedMovies);
         })
-        .catch((err) =>
-          setIsInfoTooltip({
-            isOpen: true,
-            tooltipMessage: err,
-          })
-        );
+        .catch((err) => console.log(err));
     }
   }, [currentUser, userEmail]);
 
@@ -106,9 +99,7 @@ function App() {
         .catch((err) => {
           console.log(err);
           localStorage.removeItem("token");
-          handleInfoTooltip({
-            tooltipMessage: "Произошла ошибка с токеном",
-          });
+          handleInfoTooltipClick("Произошла ошибка с токеном.");
         })
         .finally(() => {
           setPreloader(false);
@@ -130,10 +121,7 @@ function App() {
         }
       })
       .catch((res) =>
-        handleInfoTooltip({
-          isOpen: true,
-          tooltipMessage: "Что-то пошло не так! Попробуйте ещё раз.",
-        })
+        handleInfoTooltipClick("Что-то пошло не так! Попробуйте ещё раз.")
       );
   }
 
@@ -141,20 +129,18 @@ function App() {
   function handleRegister(name, email, password) {
     Auth.register(name, email, password)
       .then(() => {
+        handleInfoTooltipClick("Вы успешно зарегистрировались!");
         handleAuthorize(email, password);
       })
-      .catch((err) => {
-        console.log(err);
-        handleInfoTooltip({
-          isOpen: true,
-          tooltipMessage: "Что-то пошло не так! Попробуйте ещё раз.",
-        });
-      });
+      .catch((err) =>
+        handleInfoTooltipClick("Что-то пошло не так! Попробуйте ещё раз.")
+      );
   }
 
   //выход из аккаунта
   function handleSignOut() {
     setUserEmail("");
+    setSaveMovies([]);
     localStorage.removeItem("token");
   }
 
@@ -171,12 +157,7 @@ function App() {
     mainApi
       .saveMovieCard(card)
       .then((newMovie) => setSaveMovies([newMovie, ...saveMovies]))
-      .catch((err) =>
-        handleInfoTooltip({
-          isOpen: true,
-          tooltipMessage: err,
-        })
-      );
+      .catch((err) => console.log(err));
   }
 
   /* удаление фильма из сохраненных */
@@ -196,18 +177,14 @@ function App() {
         });
         setSaveMovies(updateMovies);
       })
-      .catch((err) =>
-        handleInfoTooltip({
-          isOpen: true,
-          tooltipMessage: err,
-        })
-      );
+      .catch((err) => console.log(err));
   }
 
   // Открытие попапа уведомления
-  function handleInfoTooltip(data) {
+
+  function handleInfoTooltipClick(tooltipMessage) {
+    setTooltipMessage(tooltipMessage);
     setIsInfoTooltip(true);
-    setData({ ...data });
   }
   //закрытте попапа
   function closePopup() {
@@ -222,23 +199,25 @@ function App() {
             <Route exact path="/" component={Main} />
             <ProtectedRoute
               path="/movies"
+              userEmail={userEmail}
               component={Movies}
               onSaveClick={handleSaveMovie}
               saveMovies={saveMovies}
               preloader={preloader}
               setPreloader={setPreloader}
-              handleInfoTooltip={handleInfoTooltip}
+              handleInfoTooltip={handleInfoTooltipClick}
+              tooltipMessage={tooltipMessage}
               onDeleteClick={(movie) => handleDeleteMovie(movie)}
-              userEmail={userEmail}
             />
             <ProtectedRoute
               path="/saved-movies"
               component={SavedMovies}
-              handleInfoTooltip={handleInfoTooltip}
+              userEmail={userEmail}
+              handleInfoTooltip={handleInfoTooltipClick}
+              tooltipMessage={tooltipMessage}
               saveMovies={saveMovies}
               preloader={preloader}
               onDeleteClick={handleDeleteMovie}
-              userEmail={userEmail}
             />
 
             <ProtectedRoute
@@ -261,9 +240,9 @@ function App() {
           {!pathToFooter ? null : <Footer />}
           <InfoTooltip
             isOpen={isInfoTooltip}
+            tooltipMessage={tooltipMessage}
             onClose={closePopup}
             userEmail={userEmail}
-            data={isData}
           />
         </div>
       </div>

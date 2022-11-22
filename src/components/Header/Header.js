@@ -3,7 +3,7 @@ import "./Header.css";
 import "../../index.css";
 import "../NavBar/NavBar.css";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 import logo from "../../images/logo.svg";
 import icon from "../../images/icon.svg";
@@ -45,12 +45,12 @@ function Header({ userEmail }) {
           {userEmail ? (
             <div className="header-nav__container">
               <div className="header-nav__links">
-                <Link to="/movies" className="header-nav__link">
+                <NavLink  to="/movies" className="header-nav__link">
                   Фильмы
-                </Link>
-                <Link to="/saved-movies" className="header-nav__link">
+                </NavLink>
+                <NavLink  to="/saved-movies" className="header-nav__link">
                   Сохранённые фильмы
-                </Link>
+                </NavLink>
               </div>
               <Link
                 to="/profile"
@@ -88,12 +88,12 @@ function Header({ userEmail }) {
           </Link>
           <div className="header-nav__container">
             <div className="header-nav__links">
-              <Link to="/movies" className="header-nav__link">
+              <NavLink  to="/movies" className="header-nav__link">
                 Фильмы
-              </Link>
-              <Link to="/saved-movies" className="header-nav__link">
+              </NavLink>
+              <NavLink  to="/saved-movies" className="header-nav__link">
                 Сохранённые фильмы
-              </Link>
+              </NavLink>
             </div>
             <Link
               to="/profile"

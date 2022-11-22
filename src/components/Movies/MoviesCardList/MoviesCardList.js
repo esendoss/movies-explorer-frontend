@@ -8,7 +8,7 @@ const desktop = { width: 950, item: { total: 12, add: 3 } };
 const tablet = { width: 650, item: { total: 8, add: 2 } };
 const mobile = { width: 650, item: { total: 5, add: 2 } };
 
-function MoviesCardList({ allMovies, saveMovies, onSaveClick, onDeleteClick }) {
+function MoviesCardList(props) {
   const windowWidth = useScreen();
   const loc = useLocation();
 
@@ -35,18 +35,18 @@ function MoviesCardList({ allMovies, saveMovies, onSaveClick, onDeleteClick }) {
   }, [windowWidth, isMount, desktop, tablet, mobile, loc.pathname]);
 
   useEffect(() => {
-    if (allMovies.length) {
-      const res = allMovies.filter((item, i) => i < amountCards.total);
+    if (props.allMovies.length) {
+      const res = props.allMovies.filter((item, i) => i < amountCards.total);
       setAppearMovies(res);
     }
-  }, [allMovies, amountCards.total]);
+  }, [props.allMovies, amountCards.total]);
 
   /* функция работы кнопки "еще" */
   function showMore() {
     const all = appearMovies.length + amountCards.add;
-    const extraCards = allMovies.length - appearMovies.length;
+    const extraCards = props.allMovies.length - appearMovies.length;
     if (extraCards > 0) {
-      const newFilms = allMovies.slice(appearMovies.length, all);
+      const newFilms = props.allMovies.slice(appearMovies.length, all);
       setAppearMovies([...appearMovies, ...newFilms]);
     }
   }
@@ -62,9 +62,9 @@ function MoviesCardList({ allMovies, saveMovies, onSaveClick, onDeleteClick }) {
         {appearMovies.map((movie) => (
           <MoviesCard
             key={movie.id || movie._id}
-            savedFilms={getSavedMovieCard(saveMovies, movie)}
-            onSaveClick={onSaveClick}
-            onDeleteClick={onDeleteClick}
+            savedFilms={getSavedMovieCard(props.saveMovies, movie)}
+            onSaveClick={props.onSaveClick}
+            onDeleteClick={props.onDeleteClick}
             film={movie}
           />
         ))}
@@ -72,7 +72,7 @@ function MoviesCardList({ allMovies, saveMovies, onSaveClick, onDeleteClick }) {
       <section className="more">
         {loc.pathname === "/movies" &&
           appearMovies.length >= 5 &&
-          appearMovies.length < allMovies.length && (
+          appearMovies.length < props.allMovies.length && (
             <button className="more__button" type="submit" onClick={showMore}>
               Еще
             </button>

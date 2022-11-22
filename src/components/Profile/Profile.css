@@ -24,7 +24,7 @@
 .profile__container {
   display: flex;
   flex-direction: column;
-  max-width: 410px;
+  width: 410px;
   margin: 0 auto;
 }
 @media screen and (max-width: 450px) {
@@ -53,6 +53,7 @@
   line-height: 13px;
   margin: 0;
   border: none;
+  text-align: right;
 }
 
 .profile__button-edit {

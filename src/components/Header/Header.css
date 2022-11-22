@@ -50,7 +50,8 @@
   margin: 0;
   color: black;
 }
-.header-nav__link:active {
+
+.header-nav__link.active {
   text-decoration: underline;
   font-weight: 500;
 }
