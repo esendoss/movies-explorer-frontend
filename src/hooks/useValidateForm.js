@@ -28,9 +28,12 @@ const useValidateForm = (callback, setModal, setModalTitle) => {
 
         if (preparedEmail.length === 2) {
           setValidateEmail(
-            (preparedEmail[0] === "mail" && preparedEmail[1] === "ru") ||
+            (preparedEmail[0] === "gmail" && preparedEmail[1] === "com") ||
+              (preparedEmail[0] === "mail" && preparedEmail[1] === "ru") ||
               (preparedEmail[0] === "yandex" && preparedEmail[1] === "ru") ||
-              (preparedEmail[0] === "gmail" && preparedEmail[1] === "com")
+              (preparedEmail[0] === "ya" && preparedEmail[1] === "ru") ||
+              (preparedEmail[0] === "proba" && preparedEmail[1] === "com") ||
+              (preparedEmail[0] === "proba" && preparedEmail[1] === "ru")
           );
         } else {
           setValidateEmail(false);

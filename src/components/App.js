@@ -143,7 +143,7 @@ function App() {
     setSaveMovies([]);
     localStorage.removeItem("token");
   }
-
+  // редактирование профиля
   function handleUpdateUser(data) {
     mainApi
       .editUserInfo(data.name, data.email)
@@ -152,7 +152,7 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
-
+  // сохранить фильм
   function handleSaveMovie(card) {
     mainApi
       .saveMovieCard(card)
@@ -217,7 +217,7 @@ function App() {
               tooltipMessage={tooltipMessage}
               saveMovies={saveMovies}
               preloader={preloader}
-              onDeleteClick={handleDeleteMovie}
+              onDeleteClick={(movie) => handleDeleteMovie(movie)}
             />
 
             <ProtectedRoute

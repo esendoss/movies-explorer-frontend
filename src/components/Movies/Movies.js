@@ -10,7 +10,6 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Movies(props) {
   const currentUser = React.useContext(CurrentUserContext);
-  console.log(currentUser);
 
   const [allMovies, setAllMovies] = useState([]); //все фильмы
   const [searchedMovies, setSearchedMovies] = useState([]); // запрашиваемые фильмы
