@@ -5,7 +5,7 @@ import logo from "../../images/logo.svg";
 import useValidateForm from "../../hooks/useValidateForm";
 
 function Register(props) {
-  const { values, errors, isValid, resetForm, handleSubmit, handleChange } =
+  const { values, errors, isValid, resetForm, handleChange, handleSubmit } =
     useValidateForm(props.onRegister);
 
   useEffect(() => {
@@ -27,6 +27,7 @@ function Register(props) {
           type="text"
           minLength="2"
           maxLength="30"
+          pattern="^[A-Za-zА-Яа-яЁё /s -]+$"
           autoComplete="off"
           onChange={handleChange}
           required

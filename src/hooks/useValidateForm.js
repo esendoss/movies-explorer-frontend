@@ -1,53 +1,34 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
+import isEmail from "validator/es/lib/isEmail";
 
-const useValidateForm = (callback, setModal, setModalTitle) => {
+const useValidateForm = (callback) => {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
-  const [checkValidateEmail, setValidateEmail] = useState(false);
-  const [checkValidity, setValidity] = useState(false);
 
-  const handleChange = (event) => {
-    const input = event.target;
+  const handleChange = (evt) => {
+    const input = evt.target;
     const { name, value } = input;
 
-    setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: input.validationMessage });
-    setValidity(input.closest("form").checkValidity());
+    if (name === "name" && input.validity.patternMismatch) {
+      input.setCustomValidity(
+        "Имя может содержать только латиницу, кириллицу, пробел, дефис."
+      );
+    } else {
+      input.setCustomValidity("");
+    }
 
-    if (name === "email" || values.email) {
-      let validateEmail;
-      if (name === "email") {
-        validateEmail = value.split("@");
+    if (name === "email") {
+      if (!isEmail(value)) {
+        input.setCustomValidity("Некорректный почтовый адрес.");
       } else {
-        validateEmail = values.email.split("@");
-      }
-
-      if (validateEmail.length === 2) {
-        let preparedEmail = validateEmail[1].toString().split(".");
-
-        if (preparedEmail.length === 2) {
-          setValidateEmail(
-            (preparedEmail[0] === "gmail" && preparedEmail[1] === "com") ||
-              (preparedEmail[0] === "mail" && preparedEmail[1] === "ru") ||
-              (preparedEmail[0] === "yandex" && preparedEmail[1] === "ru") ||
-              (preparedEmail[0] === "ya" && preparedEmail[1] === "ru") ||
-              (preparedEmail[0] === "proba" && preparedEmail[1] === "com") ||
-              (preparedEmail[0] === "proba" && preparedEmail[1] === "ru")
-          );
-        } else {
-          setValidateEmail(false);
-        }
-      } else {
-        setValidateEmail(false);
+        input.setCustomValidity("");
       }
     }
+    setValues({ ...values, [name]: value });
+    setErrors({ ...errors, [name]: input.validationMessage });
+    setIsValid(input.closest("form").checkValidity());
   };
-
-  useEffect(() => {
-    setIsValid(checkValidity && checkValidateEmail);
-  }, [checkValidateEmail, checkValidity, isValid]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -59,11 +40,8 @@ const useValidateForm = (callback, setModal, setModalTitle) => {
       } else {
         callback(values.name, values.email);
       }
-    } else {
-      setModal(true);
     }
   };
-
   const resetForm = useCallback(
     (newValues = {}, newErrors = {}, newIsValid = false) => {
       setValues(newValues);
@@ -77,10 +55,10 @@ const useValidateForm = (callback, setModal, setModalTitle) => {
     values,
     errors,
     isValid,
-    setValues,
+    setIsValid,
     resetForm,
-    handleSubmit,
     handleChange,
+    handleSubmit,
   };
 };
 

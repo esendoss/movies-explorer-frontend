@@ -5,7 +5,7 @@ import logo from "../../images/logo.svg";
 import useValidateForm from "../../hooks/useValidateForm";
 
 function Login(props) {
-  const { values, errors, isValid, resetForm, handleSubmit, handleChange } =
+  const { values, errors, isValid, resetForm, handleChange, handleSubmit } =
     useValidateForm(props.onAuthorize);
 
   useEffect(() => {
@@ -47,7 +47,9 @@ function Login(props) {
           <p className="login__error-message">{errors.password}</p>
         )}
         <button
-          className={isValid ? "login__button" : "login__button login__button_disabled"} 
+          className={
+            isValid ? "login__button" : "login__button login__button_disabled"
+          }
           type="submit"
           onClick={handleSubmit}
           disabled={!isValid}
