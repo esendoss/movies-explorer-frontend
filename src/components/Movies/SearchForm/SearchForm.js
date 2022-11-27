@@ -4,30 +4,31 @@ import "./SearchForm.css";
 import searchicon from "../../../images/search.svg";
 import find from "../../../images/find.svg";
 import { CurrentUserContext } from "../../../contexts/CurrentUserContext";
+import useValidateForm from "../../../hooks/useValidateForm";
 
 function SearchForm(props) {
   const currentUser = React.useContext(CurrentUserContext);
   const location = useLocation();
 
-  const [searchValue, setSearchFilmValue] = useState("");
+  const [searchValue, setSearchValue] = useState("");
   const [searchError, setSearchError] = useState("");
   const [isValid, setIsValid] = useState(false);
 
   // установка значения в поисковике
   useEffect(() => {
     if (location.pathname === "/movies") {
-      setSearchFilmValue(
-        localStorage.getItem(`${currentUser.email} - movieSearch`) || null
+      setSearchValue(
+        localStorage.getItem(`${currentUser.email} - findMovie`) || null
       );
     } else {
-      setSearchFilmValue(null);
+      setSearchValue(null);
     }
   }, [location.pathname]);
 
   function handleSearchChange(e) {
     const input = e.target;
     setIsValid(input.closest("form").checkValidity());
-    setSearchFilmValue(e.target.value);
+    setSearchValue(e.target.value);
   }
 
   function handleSubmit(evt) {
@@ -36,7 +37,7 @@ function SearchForm(props) {
       ? props.handleSearchMovies(searchValue)
       : setSearchError("Нужно ввести ключевое слово.");
     if (location.pathname === "/movies") {
-      localStorage.setItem(`${currentUser.email} - movieSearch`, searchValue);
+      localStorage.getItem(`${currentUser.email} - findMovie`, searchValue);
     }
   }
   useEffect(() => {
@@ -58,7 +59,7 @@ function SearchForm(props) {
             type="text"
             name="researcher"
             id="researcher"
-            minLength="2"
+            minLength="1"
             maxLength="40"
             value={searchValue || ""}
             onChange={handleSearchChange}

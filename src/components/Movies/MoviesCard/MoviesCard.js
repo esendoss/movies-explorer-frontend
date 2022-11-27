@@ -40,7 +40,7 @@ function MoviesCard(props) {
         )}
         {location.pathname === "/saved-movies" && (
           <button
-            className="movies-card__save-button_active"
+            className="movies-card__save-button_saved"
             type="button"
             onClick={handleDeleteClick}
           ></button>

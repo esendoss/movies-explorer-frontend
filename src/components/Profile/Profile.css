@@ -107,7 +107,7 @@
 .profile__button-save:hover {
   opacity: 0.8;
 }
-.profile__button-save:disabled {
+.profile__button-save_disabled {
   background-color: #f8f8f8;
   color: #c2c2c2;
 }

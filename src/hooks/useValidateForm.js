@@ -29,6 +29,7 @@ const useValidateForm = (callback) => {
     setErrors({ ...errors, [name]: input.validationMessage });
     setIsValid(input.closest("form").checkValidity());
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -42,6 +43,7 @@ const useValidateForm = (callback) => {
       }
     }
   };
+  
   const resetForm = useCallback(
     (newValues = {}, newErrors = {}, newIsValid = false) => {
       setValues(newValues);

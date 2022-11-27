@@ -6,6 +6,7 @@ import Preloader from "../Preloader/Preloader";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "../Movies/Movies.css";
 import "../../index.css";
+import { handleDurationCheck, filterFilms } from "../../utils/constants";
 
 function SavedMovies(props) {
   const currentUser = React.useContext(CurrentUserContext);
@@ -13,18 +14,11 @@ function SavedMovies(props) {
   const [appearedMovies, setAppearedMovies] = useState(props.saveMovies); // показываемые фильмы
   const [filteredMovies, setFilteredMovies] = useState(appearedMovies); // отфильтрованные
   const [shortMovies, setShortMovies] = useState(false); // короткометражки
-
-  function handleDurationCheck(movies) {
-    return movies.filter((movie) => movie.duration < 40);
-  }
   // поиск по запросу
-  function handleSearchMovie(value) {
-    const searchedFilms = props.filterFilms(props.saveMovies, value, shortMovies);
+  function handleSearchMovies(value) {
+    const searchedFilms = filterFilms(props.saveMovies, value, shortMovies);
     if (searchedFilms.length === 0) {
-      props.handleInfoTooltip({
-        isOpen: true,
-        tooltipMessage: "Ничего не найдено",
-      });
+      props.handleInfoTooltip("Ничего не найдено");
     } else {
       setFilteredMovies(searchedFilms);
       setAppearedMovies(searchedFilms);
@@ -34,6 +28,7 @@ function SavedMovies(props) {
   function handleCheckboxState() {
     if (!shortMovies) {
       setShortMovies(true);
+      console.log(setShortMovies)
       localStorage.setItem(`${currentUser.email} - shortSavedMovies`, true);
       setAppearedMovies(handleDurationCheck(filteredMovies));
     } else {
@@ -42,7 +37,8 @@ function SavedMovies(props) {
       setAppearedMovies(filteredMovies);
     }
   }
-
+ // console.log(handleCheckboxState)
+  /* функция проверки состояния чекбокса в local storage*/
   useEffect(() => {
     if (
       localStorage.getItem(`${currentUser.email} - shortSavedMovies`) === "true"
@@ -57,12 +53,14 @@ function SavedMovies(props) {
 
   useEffect(() => {
     setFilteredMovies(props.saveMovies);
+    console.log(setFilteredMovies);
   }, [props.saveMovies]);
 
   return (
     <section className="movies page__borders">
       <SearchForm
-        handleSearchMovie={handleSearchMovie}
+        filterFilms={filterFilms}
+        handleSearchMovies={handleSearchMovies}
         handleCheckboxState={handleCheckboxState}
         shortMovies={shortMovies}
       />
@@ -70,8 +68,7 @@ function SavedMovies(props) {
         <Preloader />
       ) : (
         <MoviesCardList
-          allMovies={filteredMovies}
-          searchedFilms={appearedMovies}
+          allMovies={appearedMovies}
           saveMovies={props.saveMovies}
           onDeleteClick={props.onDeleteClick}
         />

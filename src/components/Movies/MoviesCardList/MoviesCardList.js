@@ -3,10 +3,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
 import { useLocation } from "react-router-dom";
 import useScreen from "../../../hooks/useScreen";
-
-const desktop = { width: 950, item: { total: 12, add: 3 } };
-const tablet = { width: 650, item: { total: 8, add: 2 } };
-const mobile = { width: 650, item: { total: 5, add: 2 } };
+import { desktop, tablet, mobile } from ".././../../utils/constants";
 
 function MoviesCardList(props) {
   const windowWidth = useScreen();
@@ -20,7 +17,7 @@ function MoviesCardList(props) {
     add: 3,
   });
 
-  // зависимость кол-ва карточек от ширины экрана
+  /* количество фильмов, отображаемое на разных размерах экрана */
   useEffect(() => {
     if (loc.pathname === "/movies") {
       if (windowWidth > desktop.width) {
@@ -51,7 +48,7 @@ function MoviesCardList(props) {
     }
   }
   // функция cравнения сохраненных фильмов
-  function getSavedMovieCard(array, movie) {
+  function getSavedMovie(array, movie) {
     return array.find((item) => {
       return item.movieId === (movie.id || movie.movieId);
     });
@@ -62,7 +59,7 @@ function MoviesCardList(props) {
         {appearMovies.map((movie) => (
           <MoviesCard
             key={movie.id || movie._id}
-            savedFilms={getSavedMovieCard(props.saveMovies, movie)}
+            savedFilms={getSavedMovie(props.saveMovies, movie)}
             onSaveClick={props.onSaveClick}
             onDeleteClick={props.onDeleteClick}
             film={movie}

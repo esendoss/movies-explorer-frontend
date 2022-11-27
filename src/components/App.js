@@ -52,7 +52,6 @@ function App() {
   }, []);
 
   /* получение данных пользователя и сохраненных фильмов */
-  //console.log(currentUser);
 
   useEffect(() => {
     if (userEmail) {
@@ -67,7 +66,6 @@ function App() {
     }
   }, [userEmail]);
 
-  // массив сохраненных фильмов
   useEffect(() => {
     if (userEmail && currentUser) {
       mainApi.updateEmail();
@@ -83,7 +81,7 @@ function App() {
     }
   }, [currentUser, userEmail]);
 
-  /* проверка токена */
+  /* Функия проверки токена */
   function handleTokenCheck() {
     const token = localStorage.getItem("token");
     if (token) {
@@ -111,7 +109,7 @@ function App() {
     history.push("/movies");
   }
 
-  //авторизация
+  /* Авторизация */
   function handleAuthorize(email, password) {
     Auth.authorize(email, password)
       .then((data) => {
@@ -125,7 +123,7 @@ function App() {
       );
   }
 
-  //регистрация
+  /* Регистрация */
   function handleRegister(name, email, password) {
     Auth.register(name, email, password)
       .then(() => {
@@ -137,22 +135,27 @@ function App() {
       );
   }
 
-  //выход из аккаунта
+  /* Выход из аккаунта */
   function handleSignOut() {
     setUserEmail("");
     setSaveMovies([]);
     localStorage.removeItem("token");
   }
-  // редактирование профиля
-  function handleUpdateUser(data) {
+
+  /* Редактирование данных профиля */
+  function handleUpdateUser(name, email) {
     mainApi
-      .editUserInfo(data.name, data.email)
+      .editUserInfo(name, email)
       .then((newProfile) => {
         setCurrentUser(newProfile);
+        handleInfoTooltipClick("Ваши данные обновлены!");
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>
+        handleInfoTooltipClick("При обновлении профиля произошла ошибка.")
+      );
   }
-  // сохранить фильм
+
+  /* Добавление фильма в сохраненные */
   function handleSaveMovie(card) {
     mainApi
       .saveMovieCard(card)
@@ -160,7 +163,7 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  /* удаление фильма из сохраненных */
+  /* Удаление фильма из сохраненных */
   function handleDeleteMovie(movie) {
     const savedCard = saveMovies.find(
       (card) => card.movieId === movie.id || card.movieId === movie.movieId
@@ -180,16 +183,17 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  // Открытие попапа уведомления
-
+  /* Открытие попапа уведомления */
   function handleInfoTooltipClick(tooltipMessage) {
     setTooltipMessage(tooltipMessage);
     setIsInfoTooltip(true);
   }
-  //закрытте попапа
+
+  /* Закрытие попапа */
   function closePopup() {
     setIsInfoTooltip(false);
   }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -199,8 +203,8 @@ function App() {
             <Route exact path="/" component={Main} />
             <ProtectedRoute
               path="/movies"
-              userEmail={userEmail}
               component={Movies}
+              userEmail={userEmail}
               onSaveClick={handleSaveMovie}
               saveMovies={saveMovies}
               preloader={preloader}
@@ -217,7 +221,7 @@ function App() {
               tooltipMessage={tooltipMessage}
               saveMovies={saveMovies}
               preloader={preloader}
-              onDeleteClick={(movie) => handleDeleteMovie(movie)}
+              onDeleteClick={handleDeleteMovie}
             />
 
             <ProtectedRoute
