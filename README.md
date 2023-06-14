@@ -1,11 +1,22 @@
 # movies-explorer-frontend
-Фронтенд часть дипломного проекта
+Дипломный проект в Яндекс Практикуме.
 
-Ссылка на макет: https://drive.google.com/file/d/1kf2-6W51-SfaLEl-SuA3iysXKfFyIni6/view?usp=sharing
+**О проекте:**
+---
+Приложение по поиску фильмов, где можно редактировать профиль пользователя, искать фильмы по названию и добавлять в избранное. Реализована регистрация пользователя, сортировка искомых фильмов по хронометражу (короткометражки).
 
-Ссылка на пулреквест: https://github.com/esendoss/movies-explorer-frontend/pull/2
+**Используемые технологии:**
+---
+- HTML5,CSS3 (Flexbox, Grid Layout)
+- ReactJS
+- ExpressJS, MongoDB, Postman
+- Webpack
+- Aдаптированная вёрстка.
 
+**Как запустить проект**
+---
 Публичный IP-адрес сервера и домен, по которому к нему можно обратиться:
-
 158.160.44.234
 http://movies-esendoss.nomoredomains.icu
+
+Ссылка на макет: https://drive.google.com/file/d/1kf2-6W51-SfaLEl-SuA3iysXKfFyIni6/view?usp=sharing
