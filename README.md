@@ -16,7 +16,7 @@
 **Как запустить проект**
 ---
 Публичный IP-адрес сервера и домен, по которому к нему можно обратиться:
-158.160.44.234
-http://movies-esendoss.nomoredomains.icu
+- 158.160.44.234
+- http://movies-esendoss.nomoredomains.icu
 
 Ссылка на макет: https://drive.google.com/file/d/1kf2-6W51-SfaLEl-SuA3iysXKfFyIni6/view?usp=sharing
